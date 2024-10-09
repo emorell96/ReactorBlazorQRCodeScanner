@@ -1,4 +1,5 @@
 using Microsoft.JSInterop;
+using ReactorBlazorQRCodeScanner.Models;
 
 namespace ReactorBlazorQRCodeScanner
 {
@@ -18,12 +19,26 @@ namespace ReactorBlazorQRCodeScanner
                 "import", "./_content/ReactorBlazorQRCodeScanner/qrCodeScannerJsInterop.js").AsTask());
         }
 
+        public async ValueTask<List<MediaDeviceInfo>> GetDevices()
+        {
+            var module = await moduleTask.Value;
+            return (await module.InvokeAsync<List<MediaDeviceInfo>>("Scanner.GetDevices")).Where(x => x.Kind == "videoinput").ToList();
+        }
+
         public async ValueTask Init(Action<string> onQrCodeScanAction, bool useFrontCamera = false, bool flipHorizontal = false)
         {
             _onQrCodeScanAction = onQrCodeScanAction;
 
             var module = await moduleTask.Value;
             await module.InvokeVoidAsync("Scanner.Init", new object[2] { useFrontCamera, flipHorizontal });
+        }
+
+        public async ValueTask Init(Action<string> onQrCodeScanAction, string deviceId)
+        {
+            _onQrCodeScanAction = onQrCodeScanAction;
+
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("Scanner.Init", [false, false, deviceId]);
         }
 
         public async ValueTask Init(Action<string> onQrCodeScanAction, Action<string> onCameraPermissionFailedAction

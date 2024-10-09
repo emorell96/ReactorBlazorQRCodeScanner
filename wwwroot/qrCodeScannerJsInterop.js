@@ -24,7 +24,11 @@ var Scanner = {
         //    DotNet.invokeMethodAsync("ReactorBlazorQRCodeScanner", "ManageErrorJsCallBack", json);
         //}
     },
-    Init: function (useFront, flipHorizontal) {
+    GetDevices: function () {
+        // AFAICT in Safari this only gets default devices until gUM is called :/
+        return navigator.mediaDevices.enumerateDevices();
+    },
+    Init: function (useFront, flipHorizontal, deviceId = undefined) {
         try {
             console.log("init jsQR");
             videoStopped = false;
@@ -60,12 +64,23 @@ var Scanner = {
 
             // Use facingMode: environment to attemt to get the front camera on phones
             var videoConfig = {};
-            if (useFront) {
-                videoConfig = { video: { facingMode: "user" } };
+            if (deviceId === undefined) {
+                console.log("deviceId is undefined.")
+                if (useFront) {
+                    videoConfig = {
+                        video: { facingMode: "user" }
+                    };
+                }
+                else {
+                    videoConfig = { video: { facingMode: "environment" } };
+                }
             }
             else {
-                videoConfig = { video: { facingMode: "environment" } };
-            }
+                console.log(`deviceId is defined as: ${deviceId}`)
+                videoConfig = {
+                    video: { deviceId: { exact: deviceId } }
+                }
+            }           
 
             navigator.mediaDevices
                 .getUserMedia(videoConfig)
