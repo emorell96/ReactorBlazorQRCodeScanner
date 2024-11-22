@@ -6,22 +6,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <PackageId>ReactorBlazorQRCodeScanner</PackageId>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <Authors>Yann Vasseur</Authors>
     <Company>reactor.fr</Company>
     <PackageTags>Blazor;Reactor;QRCode;ScannerQR Code</PackageTags>
 
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="docs\**" />
-    <Content Remove="docs\**" />
-    <EmbeddedResource Remove="docs\**" />
-    <None Remove="docs\**" />
+  <ItemGroup>     
+    <None Include="README.md" Pack="true" PackagePath="\" /> <!--Nécessaire pour nuget package-->
+    <None Include="LICENSE.txt" Pack="true" PackagePath="\" />
   </ItemGroup>
-
-
+  
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
