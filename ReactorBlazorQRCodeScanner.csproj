@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <PackageId>ReactorBlazorQRCodeScanner</PackageId>
-    <Version>1.0.6</Version>
+    <Version>1.0.9</Version>
     <Authors>Yann Vasseur</Authors>
     <Company>reactor.fr</Company>
     <PackageTags>Blazor;Reactor;QRCode;ScannerQR Code</PackageTags>
